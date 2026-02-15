@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:vaporBasics}/hello",
+            "name": "Debug hello (hello)",
+            "target": "hello",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug hello (hello)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:vaporBasics}/hello",
+            "name": "Release hello (hello)",
+            "target": "hello",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release hello (hello)"
+        }
+    ]
+}
