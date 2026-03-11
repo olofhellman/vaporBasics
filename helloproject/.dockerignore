@@ -1,0 +1,22 @@
+# Git metadata
+.git
+.gitignore
+
+# Swift build artifacts
+.build
+.swiftpm
+
+# Editor/IDE files
+.vscode
+.idea
+
+# OS clutter
+.DS_Store
+
+# Local runtime/test artifacts
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Docker compose overrides
+docker-compose.override.yml
