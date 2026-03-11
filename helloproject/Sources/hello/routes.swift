@@ -15,10 +15,14 @@ func routes(_ app: Application) throws {
             return response
         }
 
-        guard let shortCode = req.parameters.get("token") else {
+        guard let token = req.parameters.get("token") else {
             return textResponse("For whatever reason, the token was missing from the URL. Sorry", status: .notFound)
         }
- 
+
+        let tokenComponents = token.split(separator: "+")
+        let shortCode = String(tokenComponents.first ?? "")
+        let otherComponents = tokenComponents.dropFirst()
+
         guard let link = try? await Link.query(on: req.db)
             .filter(\.$shortCode == shortCode)
             .first() else { return textResponse("There's no link associated with that token", status: .notFound) }
@@ -29,7 +33,7 @@ func routes(_ app: Application) throws {
             let redirection = "redirects to: " + link.url  
             return textResponse(shortCodeString + "\n" + redirection)
         }
-        
+
         let ipAddress = req.remoteAddress?.ipAddress ?? "unknown"
         let userAgent = req.headers.first(name: .userAgent) ?? "unknown"
     
@@ -37,7 +41,7 @@ func routes(_ app: Application) throws {
             // store info in database 'Task' schedules this work on an async thread,
             // so it won't block the current request from returning the redirect response.
    
-            let forward = Forward(clientIpAddress: ipAddress, userAgent: userAgent, shortCode: shortCode, otherComponents: "")
+            let forward = Forward(clientIpAddress: ipAddress, userAgent: userAgent, shortCode: shortCode, otherComponents:  otherComponents.joined(separator: "/"))
             try await forward.save(on: req.db)
         }
         
