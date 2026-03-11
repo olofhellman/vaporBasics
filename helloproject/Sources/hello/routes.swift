@@ -29,7 +29,18 @@ func routes(_ app: Application) throws {
             let redirection = "redirects to: " + link.url  
             return textResponse(shortCodeString + "\n" + redirection)
         }
-
+        
+        let ipAddress = req.remoteAddress?.ipAddress ?? "unknown"
+        let userAgent = req.headers.first(name: .userAgent) ?? "unknown"
+    
+        Task {
+            // store info in database 'Task' schedules this work on an async thread,
+            // so it won't block the current request from returning the redirect response.
+   
+            let forward = Forward(clientIpAddress: ipAddress, userAgent: userAgent, shortCode: shortCode, otherComponents: "")
+            try await forward.save(on: req.db)
+        }
+        
         return req.redirect(to: link.url)
     }
 
