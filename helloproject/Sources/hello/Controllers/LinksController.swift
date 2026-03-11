@@ -1,16 +1,20 @@
 import Fluent
 import Vapor
 
+//     Create is the C in CRUD
 struct CreateLinkRequest: Content {
     let url: String
     let shortCode: String
 }
 
+//     Update is the U in CRUD
 struct UpdateLinkRequest: Content {
     let url: String
     let shortCode: String
 }
 
+//      Read is the R in CRUD
+// When Reading from the database with a GET,  LinkResponse is what gets returned 
 struct LinkResponse: Content {
     let id: UUID?
     let url: String
@@ -23,25 +27,38 @@ struct LinkResponse: Content {
     }
 }
 
+// LinksController is registered in routes.swift under the partial path "api" 
 struct LinksController: RouteCollection {
     func boot(routes: any RoutesBuilder) throws {
         let links = routes.grouped("links")
+        // Now, links handles all requests to /api/links 
 
-        links.get(use: index)
-        links.post(use: create)
+        // register a handler for GET /api/links
+        links.get(use: handleGET)
+
+        // register a handler for POST /api/links
+        links.post(use: handlePOST)
+
+        // now, register handlers for the subpaths /api/links/:linkID
         links.group(":linkID") { link in
-            link.get(use: show)
-            link.put(use: update)
-            link.delete(use: delete)
+
+            // GET a single link
+            link.get(use: handleGETLinkID)
+
+            // PUT an Update for a single link
+            link.put(use: handlePUTUpdate)
+
+            // DELETE a single link
+            link.delete(use: handleDELETE)
         }
     }
 
-    func index(req: Request) async throws -> [LinkResponse] {
+    func handleGET(req: Request) async throws -> [LinkResponse] {
         let links = try await Link.query(on: req.db).all()
         return links.map { LinkResponse(from: $0) }
     }
 
-    func create(req: Request) async throws -> Response {
+    func handlePOST(req: Request) async throws -> Response {
         let payload = try req.content.decode(CreateLinkRequest.self)
         try validateInput(url: payload.url, shortCode: payload.shortCode)
 
@@ -61,12 +78,12 @@ struct LinksController: RouteCollection {
         return response
     }
 
-    func show(req: Request) async throws -> LinkResponse {
+    func handleGETLinkID(req: Request) async throws -> LinkResponse {
         let link = try await findLink(req)
         return LinkResponse(from: link)
     }
 
-    func update(req: Request) async throws -> LinkResponse {
+    func handlePUTUpdate(req: Request) async throws -> LinkResponse {
         let link = try await findLink(req)
         let payload = try req.content.decode(UpdateLinkRequest.self)
         try validateInput(url: payload.url, shortCode: payload.shortCode)
@@ -87,7 +104,7 @@ struct LinksController: RouteCollection {
         return LinkResponse(from: link)
     }
 
-    func delete(req: Request) async throws -> HTTPStatus {
+    func handleDELETE(req: Request) async throws -> HTTPStatus {
         let link = try await findLink(req)
         try await link.delete(on: req.db)
         return .noContent
