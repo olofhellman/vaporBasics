@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "swift: Build Debug hello (helloproject)",
+            "type": "shell",
+            "command": "swift",
+            "args": [
+                "build",
+                "--configuration",
+                "debug",
+                "--package-path",
+                "helloproject"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "swift: Build Release hello (helloproject)",
+            "type": "shell",
+            "command": "swift",
+            "args": [
+                "build",
+                "--configuration",
+                "release",
+                "--package-path",
+                "helloproject"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "swift: Test hello (helloproject)",
+            "type": "shell",
+            "command": "swift",
+            "args": [
+                "test",
+                "--package-path",
+                "helloproject"
+            ],
+            "group": "test",
+            "problemMatcher": []
+        }
+    ]
+}
