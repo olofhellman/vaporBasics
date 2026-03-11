@@ -19,6 +19,26 @@
             "target": "hello",
             "configuration": "release",
             "preLaunchTask": "swift: Build Release hello (hello)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:vaporBasics}/helloproject",
+            "name": "Debug hello (helloproject)",
+            "target": "hello",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug hello (helloproject)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:vaporBasics}/helloproject",
+            "name": "Release hello (helloproject)",
+            "target": "hello",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release hello (helloproject)"
         }
     ]
 }
