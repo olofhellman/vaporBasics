@@ -16,6 +16,7 @@ public func configure(_ app: Application) async throws {
 
     // Create Links/Forwards schemas.
     app.migrations.add(LinksDatabaseMigration())
+    app.migrations.add(SeedLinks())
     app.migrations.add(ForwardsDatabaseMigration())
     try await app.autoMigrate()
 
