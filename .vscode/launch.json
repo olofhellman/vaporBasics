@@ -4,29 +4,9 @@
             "type": "swift",
             "request": "launch",
             "args": [],
-            "cwd": "${workspaceFolder:vaporBasics}/hello",
-            "name": "Debug hello (hello)",
-            "target": "hello",
-            "configuration": "debug",
-            "preLaunchTask": "swift: Build Debug hello (hello)"
-        },
-        {
-            "type": "swift",
-            "request": "launch",
-            "args": [],
-            "cwd": "${workspaceFolder:vaporBasics}/hello",
-            "name": "Release hello (hello)",
-            "target": "hello",
-            "configuration": "release",
-            "preLaunchTask": "swift: Build Release hello (hello)"
-        },
-        {
-            "type": "swift",
-            "request": "launch",
-            "args": [],
-            "cwd": "${workspaceFolder:vaporBasics}/helloproject",
+            "cwd": "${workspaceFolder}/helloproject",
             "name": "Debug hello (helloproject)",
-            "target": "hello",
+            "program": "${workspaceFolder}/helloproject/.build/debug/hello",
             "configuration": "debug",
             "preLaunchTask": "swift: Build Debug hello (helloproject)"
         },
@@ -34,9 +14,9 @@
             "type": "swift",
             "request": "launch",
             "args": [],
-            "cwd": "${workspaceFolder:vaporBasics}/helloproject",
+            "cwd": "${workspaceFolder}/helloproject",
             "name": "Release hello (helloproject)",
-            "target": "hello",
+            "program": "${workspaceFolder}/helloproject/.build/release/hello",
             "configuration": "release",
             "preLaunchTask": "swift: Build Release hello (helloproject)"
         }
