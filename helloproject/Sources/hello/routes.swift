@@ -41,7 +41,7 @@ func routes(_ app: Application) throws {
             // store info in database 'Task' schedules this work on an async thread,
             // so it won't block the current request from returning the redirect response.
    
-            let forward = Forward(clientIpAddress: ipAddress, userAgent: userAgent, shortCode: shortCode, otherComponents:  otherComponents.joined(separator: "/"))
+            let forward = Forward(clientIpAddress: ipAddress, userAgent: userAgent, shortCode: shortCode, otherComponents:  otherComponents.joined(separator: "+"))
             try await forward.save(on: req.db)
         }
         
