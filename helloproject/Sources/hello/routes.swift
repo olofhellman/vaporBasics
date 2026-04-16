@@ -30,7 +30,7 @@ func routes(_ app: Application) throws {
             return textResponse(shortCodeString + "\n" + redirection)
         }
         
-        let ipAddress = req.remoteAddress?.ipAddress ?? "unknown"
+        let ipAddress: String = req.remoteAddress?.ipAddress ?? "unknown"
         let userAgent = req.headers.first(name: .userAgent) ?? "unknown"
     
         Task {
