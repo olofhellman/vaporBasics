@@ -21,7 +21,9 @@ func routes(_ app: Application) throws {
  
         guard let link = try? await Link.query(on: req.db)
             .filter(\.$shortCode == shortCode)
-            .first() else { return textResponse("There's no link associated with that token", status: .notFound) }
+            .first() else { 
+                return textResponse("There's no link associated with that token", status: .notFound) 
+            }
         
           // handle the case where the url had a ?debug=true query parameter
         if let debug = try? req.query.get(Bool.self, at: "debug"), debug {
