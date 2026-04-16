@@ -59,7 +59,7 @@ struct LinksController: RouteCollection {
     }
 
     func handlePOST(req: Request) async throws -> Response {
-        let payload = try req.content.decode(CreateLinkRequest.self)
+        let payload: CreateLinkRequest = try req.content.decode(CreateLinkRequest.self)
         try validateInput(url: payload.url, shortCode: payload.shortCode)
 
         let existing = try await Link.query(on: req.db)

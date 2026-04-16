@@ -14,7 +14,9 @@ func routes(_ app: Application) throws {
  
         guard let link = try? await Link.query(on: req.db)
             .filter(\.$shortCode == shortCode)
-            .first() else { throw Abort(.notFound) }
+            .first() else { 
+                throw Abort(.notFound) 
+            }
         
         return req.redirect(to: link.url)
     }
